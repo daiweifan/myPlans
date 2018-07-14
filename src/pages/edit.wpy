@@ -1,0 +1,106 @@
+<style lang="less">
+.weui-cells__title{
+	margin-bottom:1em;
+	font-size:22px;
+	font-weight:bold;
+}
+</style>
+<template>
+    <view class="page">
+        <view class="page__bd">
+            <view class="weui-cells__title">完善你的计划</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">任务标题</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" length="8" placeholder="请输入任务标题(不超过8位)" />
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">任务详情</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <view class="weui-cell weui-cell_input">
+		                    <textarea ></textarea>
+		                </view>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">完成日期</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
+                            <view class="weui-input">{{date}}</view>
+                        </picker>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_select">
+                    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                        <view class="weui-label">优先级</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker @change="bindCountryChange" value="{{countryIndex}}" range="{{countries}}">
+                            <view class="weui-select weui-select_in-select-after">{{countries[countryIndex]}}</view>
+                        </picker>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-cells__tips">制定了计划就要有效地去实现</view> 
+            <view class="weui-btn-area">
+                <button class="weui-btn" type="primary" @tap="showTopTips">更新</button>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class Input extends wepy.page {
+
+        data = {
+
+            date: '',
+
+            countries: ['普通', '紧急', '立刻'],
+            countryIndex: 0,
+
+        };
+
+        methods = {
+
+            bindDateChange (e) {
+                this.data = e.detail.value;
+            },
+            bindCountryCodeChange (e) {
+                console.log('picker country code 发生选择改变，携带值为', e.detail.value);
+
+                this.countryCodeIndex = e.detail.value;
+            },
+  
+            async showTopTips () {
+
+                let res = await wepy.showModal({
+                    content: '新建任务',
+                    showCancel: false
+                });          
+                if (res.confirm) {
+                    console.log('用户点击确定');
+                    wx.redirectTo({url:'./index'});
+                    wx.redirectTo({url:'./index'});
+ //                 wx.navigateTo({url:'./index'});
+                }
+                
+            }
+
+        };
+
+        onLoad () {
+             this.icon = require('../images/base64.js').icon20;
+        }
+    }
+</script>

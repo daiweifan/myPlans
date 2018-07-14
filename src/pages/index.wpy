@@ -1,0 +1,233 @@
+<style lang="less">
+.navbar {
+    .page,
+    .page__bd{
+        height: 100%;
+    }
+    .page__bd{
+        padding-bottom: 0;
+    }
+    .weui-tab__content{
+        padding-top: 10px;
+        text-align: center;
+    }
+    .weui-cells{
+        margin-top: 0;
+        opacity: 0;
+        transform: translateY(-50%);
+        transition: .3s;
+        &:before, &:after{
+            display: none;
+        }
+        &_show{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .weui-cell{
+    	position:relative;
+
+        &:before{
+            right: 15px;
+        }
+    }
+    .weui-media-box__desc{
+    	margin-top:10px;
+    }
+    .time{
+    	font-size:13px;
+		color:grey;
+		margin-top:5px;
+    }
+    .weui-cell__ft_in-access {
+		padding-right:33px;
+	}
+	.weui-media-box{
+		border-bottom:1px solid #d3cfcf;
+	}
+}
+</style>
+<template>
+	<view >
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">我的任务列表</view>
+                    </view>
+                    <navigator url="./add" >
+                      <button class=" mini-btn" type="primary" size="mini">新增</button>
+					</navigator>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="navbar page">
+        <view class="page__bd">
+            <view class="weui-tab">
+                <view class="weui-navbar">
+                    <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+                </view>
+                <view class="weui-tab__panel">
+                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                    	<repeat for="{{list}}" key="index" index="index" item="item">
+	                    	<navigator url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+		                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+		                            <image class="weui-media-box__thumb" src="{{icon60}}" />
+		                        </view>
+		                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+		                            <view class="weui-media-box__title">
+		                            	<view class="weui-flex">
+							                <view class="weui-flex__item"><view class="placeholder">{{item.name}}</view></view>
+							                <view ><view class="placeholder time">{{item.time}}</view></view>
+							            </view>
+		                            </view>
+		                            <view class="weui-media-box__desc">
+		                            	 <view class="weui-progress">
+							                <view class="weui-progress__bar">
+							                    <progress percent="{{item.process}}" stroke-width="3" />
+							                </view>
+							            </view>
+		                            </view>
+		                        </view>
+		                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+		                    </navigator>
+		                </repeat>
+                    </view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                    	<repeat for="{{list2}}" key="index" index="index" item="item">
+	                    	<navigator url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+		                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+		                            <image class="weui-media-box__thumb" src="{{icon60}}" />
+		                        </view>
+		                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+		                            <view class="weui-media-box__title">
+		                            	<view class="weui-flex">
+							                <view class="weui-flex__item"><view class="placeholder">{{item.name}}</view></view>
+							                <view ><view class="placeholder time">{{item.time}}</view></view>
+							            </view>
+		                            </view>
+		                            <view class="weui-media-box__desc">
+		                            	 <view class="weui-progress">
+							                <view class="weui-progress__bar">
+							                    <progress percent="{{item.process}}" stroke-width="3" />
+							                </view>
+							            </view>
+		                            </view>
+		                        </view>
+		                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+		                    </navigator>
+		                </repeat>
+
+
+                    </view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+                    	<repeat for="{{list}}" key="index" index="index" item="item">
+	                    	<navigator url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+		                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+		                            <image class="weui-media-box__thumb" src="{{icon60}}" />
+		                        </view>
+		                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+		                            <view class="weui-media-box__title">
+		                            	<view class="weui-flex">
+							                <view class="weui-flex__item"><view class="placeholder">{{item.name}}</view></view>
+							                <view ><view class="placeholder time">{{item.time}}</view></view>
+							            </view>
+		                            </view>
+		                            <view class="weui-media-box__desc">
+		                            	 <view class="weui-progress">
+							                <view class="weui-progress__bar">
+							                    <progress percent="50" stroke-width="3" />
+							                </view>
+							            </view>
+		                            </view>
+		                        </view>
+		                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+		                    </navigator>
+		                </repeat>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+    export default class Toast extends wepy.page {
+
+        data = {
+            tabs: ['执行中', '已完成', '已终止'],
+            activeIndex: 0,
+            sliderOffset: 0,
+            sliderLeft: 0,
+            icon60: '',
+            list:[{
+            	name:'数学家庭作业',
+            	url:'./edit',
+            	process:'50',
+            	time:'2018.7.14'
+            },{
+            	name:'语文阅读理解',
+            	url:'./edit',
+            	process:'30',
+            	time:'2018.7.15'
+            },{
+            	name:'英语听力',
+            	url:'./edit',
+            	process:'0',
+            	time:'2018.7.16'
+            }],
+            list2:[{
+            	name:'物理家庭作业',
+            	url:'./edit',
+            	process:'50',
+            	time:'2018.7.14'
+            },{
+            	name:'政治阅读理解',
+            	url:'./edit',
+            	process:'30',
+            	time:'2018.7.15'
+            },{
+            	name:'化学小实验',
+            	url:'./edit',
+            	process:'0',
+            	time:'2018.7.16'
+            }]
+        };
+
+        methods = {
+            tabClick (e) {
+                this.sliderOffset = e.currentTarget.offsetLeft;
+                this.activeIndex = e.currentTarget.id;
+                console.log("当前id:"+this.activeIndex);
+                wx.showToast({
+	                title: '数据加载中',
+	                icon: 'loading',
+	                duration: 3000
+		        });
+            }
+        }
+
+        async onLoad () {
+        	wx.showToast({
+                title: '数据加载中',
+                icon: 'loading',
+                duration: 3000
+	        });
+
+            let res = await wepy.getSystemInfo();
+            let base64 = require('../images/base64');
+	        this.icon60 = base64.icon60;
+            this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+            this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
+        }
+    }
+</script>
