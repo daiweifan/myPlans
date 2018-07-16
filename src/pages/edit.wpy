@@ -15,7 +15,7 @@
                         <view class="weui-label">任务标题</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" length="8" placeholder="请输入任务标题(不超过8位)" />
+                        <input class="weui-input" length="8" placeholder="请输入任务标题(不超过8位)" value="{{plan.name}}" />
                     </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
@@ -24,7 +24,7 @@
                     </view>
                     <view class="weui-cell__bd">
                         <view class="weui-cell weui-cell_input">
-		                    <textarea ></textarea>
+		                    <textarea >{{plan.detail}}</textarea>
 		                </view>
                     </view>
                 </view>
@@ -33,8 +33,8 @@
                         <view class="weui-label">完成日期</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
-                            <view class="weui-input">{{date}}</view>
+                        <picker mode="date" value="{{plan.deadline}}" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
+                            <view class="weui-input">{{plan.deadline}}</view>
                         </picker>
                     </view>
                 </view>
@@ -43,8 +43,8 @@
                         <view class="weui-label">优先级</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker @change="bindCountryChange" value="{{countryIndex}}" range="{{countries}}">
-                            <view class="weui-select weui-select_in-select-after">{{countries[countryIndex]}}</view>
+                        <picker @change="bindCountryChange" value="{{plan.level}}" range="{{countries}}">
+                            <view class="weui-select weui-select_in-select-after">{{countries[plan.level]}}</view>
                         </picker>
                     </view>
                 </view>
@@ -67,7 +67,14 @@
             date: '',
 
             countries: ['普通', '紧急', '立刻'],
-            countryIndex: 0,
+            plan:{
+            	id:'',
+            	name:'',
+            	detail:'',
+            	level:'',
+            	deadline:'',
+            	state:''
+            }
 
         };
 
@@ -101,6 +108,10 @@
 
         onLoad () {
              this.icon = require('../images/base64.js').icon20;
+
+             wepy.request('http://localhost:8088/david/api/plan/findById?id=1').then((d) => 
+             	this.plan=d.data.data
+             	);
         }
     }
 </script>
